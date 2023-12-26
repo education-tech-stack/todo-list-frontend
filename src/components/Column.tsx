@@ -2,13 +2,24 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { Flex, Text } from '@chakra-ui/react';
 
-import { Column, Task } from '../types';
+import Data, { Column, Task } from '../types';
 
+import AddTask from './AddTask';
 import TaskUI from './Task';
 
-function ColumnUI({ column, tasks }: { column: Column; tasks: Task[] }) {
+function ColumnUI({
+  column,
+  tasks,
+  state,
+  setState,
+}: {
+  column: Column;
+  tasks: Task[];
+  state: Data;
+  setState: (value: Data) => void;
+}) {
   return (
-    <Flex rounded="3px" bg="column-bg" w="400px" h="620px" flexDir="column">
+    <Flex rounded="3px" bg="column-bg" w="300px" h="620px" flexDir="column">
       <Flex
         align="center"
         h="60px"
@@ -22,8 +33,8 @@ function ColumnUI({ column, tasks }: { column: Column; tasks: Task[] }) {
         </Text>
       </Flex>
 
-      <Droppable droppableId={`${column.order}`}>
-        {(droppableProvided) => (
+      <Droppable droppableId={column.id}>
+        {(droppableProvided, droppableSnapshot) => (
           <Flex
             px="1.5rem"
             flex={1}
@@ -32,8 +43,9 @@ function ColumnUI({ column, tasks }: { column: Column; tasks: Task[] }) {
             {...droppableProvided.droppableProps}
           >
             {tasks.map((task, index) => (
-              <TaskUI key={task.id} task={task} index={index} />
+              <TaskUI task={task} key={task.id} index={index} />
             ))}
+            <AddTask columnId={column.id} state={state} setState={setState} />
           </Flex>
         )}
       </Droppable>

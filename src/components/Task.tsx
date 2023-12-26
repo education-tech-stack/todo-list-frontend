@@ -6,7 +6,7 @@ import { Task } from '../types';
 
 export default function TaskUI({ task, index }: { task: Task; index: number }) {
   return (
-    <Draggable key={task.id} draggableId={`${task.order}`} index={index}>
+    <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
       {(draggableProvided, draggableSnapshot) => (
         <Flex
           mb="1rem"
@@ -15,7 +15,9 @@ export default function TaskUI({ task, index }: { task: Task; index: number }) {
           rounded="3px"
           p="1.5rem"
           outline="2px solid"
-          outlineColor="card-border"
+          outlineColor={
+            draggableSnapshot.isDragging ? 'card-border' : 'transparent'
+          }
           boxShadow={
             draggableSnapshot.isDragging
               ? '0 5px 10px rgba(0, 0, 0, 0.6)'

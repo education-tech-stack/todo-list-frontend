@@ -11,9 +11,9 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
   // <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
-    </ChakraProvider>
+  <ChakraProvider theme={theme}>
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <App />
+  </ChakraProvider>
   // </React.StrictMode>
 );

@@ -1,28 +1,26 @@
-export type Data = {
-  tasks: Record<number, { id: number; content: string }>;
-  columns: Record<string, columnRecord>;
+type Data = {
+  tasks: Record<string, Task>;
+  columns: Record<string, Column>;
   columnOrder: string[];
 };
 
-export type columnRecord = { id: string; title: string; taskIds: number[] };
+export default Data;
 
 export type Task = {
   id: number;
   content: string;
   order: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   columnId: number;
 };
 
 export type Column = {
-  id: number;
+  id: string;
   title: string;
   order: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   userId: number | null;
-  tasks: Task[];
+  taskIds: number[];
 };
-
-export type Board = Column[];

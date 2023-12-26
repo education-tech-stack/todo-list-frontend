@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Input } from '@chakra-ui/react';
+import saveBoard from '../utils/saveBoard';
 
 function AddColumn(props) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
@@ -32,14 +33,16 @@ function AddColumn(props) {
       taskIds: [],
     };
 
-    props.setState({
+    const tempState = {
       ...props.state,
       columnOrder: newColumnOrder,
       columns: {
         ...props.state.columns,
         [newColumnId]: newColumn,
       },
-    });
+    };
+    props.setState(tempState);
+    saveBoard(tempState);
   }
 
   return (

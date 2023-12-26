@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Flex, Input } from '@chakra-ui/react';
 
 import Data from '../types';
+import saveBoard from '../utils/saveBoard';
 
 function AddTask(props: {
   columnId: string;
@@ -38,7 +39,7 @@ function AddTask(props: {
       content: content,
     };
 
-    props.setState({
+    const tempState = {
       ...props.state,
       tasks: {
         ...props.state.tasks,
@@ -51,7 +52,9 @@ function AddTask(props: {
           taskIds: newTaskIds,
         },
       },
-    });
+    };
+    props.setState(tempState);
+    saveBoard(tempState);
   }
 
   return (

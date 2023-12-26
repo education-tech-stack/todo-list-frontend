@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+import { Authentication } from '../types';
 
 export default async function loginAction({ request }: LoaderFunctionArgs) {
   const formData = await request.formData();
@@ -19,10 +20,18 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    await axios.post(`${import.meta.env.VITE_SERVER}/users/login`, {
-      email,
-      password,
-    });
+    const auth: Authentication = await axios.post(
+      `${import.meta.env.VITE_SERVER}/users/login`,
+      {
+        email,
+        password,
+      }
+    );
+
+    localStorage.setItem(
+      'access_token',
+      JSON.stringify(auth.data.access_token)
+    );
   } catch (error) {
     return {
       error: 'Invalid login attempt',

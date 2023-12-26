@@ -1,30 +1,39 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { redirect, useLoaderData } from 'react-router-dom';
+import {
+  Link as ReactRouterLink,
+  redirect,
+  useLoaderData,
+} from 'react-router-dom';
 
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { WarningIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, Heading, Link } from '@chakra-ui/react';
 
 import AddColumn from '../components/AddColumn';
 import ColumnUI from '../components/Column';
 import ThemeToggleButton from '../components/ThemeToggleButton';
 import Data from '../types';
 import reorderColumnList from '../utils/reorder';
+import saveBoard from '../utils/saveBoard';
 
 export async function boardLoader() {
-  const data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`);
-
-  if (data.status !== 200) {
+  try {
+    const data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+    });
+    return data;
+  } catch (error) {
     return redirect('/login');
   }
-  return data;
 }
 
 function BoardScreen(): JSX.Element {
-  const data = useLoaderData();
-  const boardData = (data || { data: [] }) as { data: Data };
+  const data = useLoaderData() as { data: Data };
 
-  const [state, setState] = useState(boardData.data);
+  const [state, setState] = useState(data.data);
 
   const onDragEnd = (result: DropResult) => {
     // console.log('result', result);
@@ -60,6 +69,7 @@ function BoardScreen(): JSX.Element {
           [newColumn.id]: newColumn,
         },
       };
+      saveBoard(newState);
       setState(newState);
       return;
     }
@@ -88,6 +98,7 @@ function BoardScreen(): JSX.Element {
       },
     };
 
+    saveBoard(newState);
     setState(newState);
   };
 
@@ -116,10 +127,13 @@ function BoardScreen(): JSX.Element {
         color="white-text"
         pb="1rem"
       >
-        <Flex py="4rem" flexDir="column" align="center">
+        <Flex py="4rem" flexDir="row" justify="space-around" align="center">
           <Heading fontSize="3xl" fontWeight={600}>
             Task Board
           </Heading>
+          <Link as={ReactRouterLink} to="/logout">
+            Logout <WarningIcon mx="2px" />
+          </Link>
         </Flex>
         <Flex justify="space-between" px="1rem" w="max">
           {state.columnOrder.map(renderColumn)}

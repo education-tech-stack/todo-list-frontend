@@ -24,3 +24,9 @@ export type Column = {
   userId: number | null;
   taskIds: number[];
 };
+
+export type Authentication = {
+  data: {
+    access_token: string;
+  };
+};

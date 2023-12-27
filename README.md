@@ -1,6 +1,6 @@
 # TaskHub 🚀 - Todo Board App
 
-> Frontend: [todo-app-frontend](https://github.com/education-tech-stack/todo-list-frontend)
+> Backend: [todo-app-backend](https://github.com/education-tech-stack/todo-list-backend)
 
 TaskHub is a robust todo board application designed to streamline task management with a user-friendly interface. Built on a tech stack featuring Node.js, Express, React.js, Sequelize ORM, TypeScript, and PostgreSQL, TaskHub offers a seamless experience for organizing and prioritizing tasks.
 

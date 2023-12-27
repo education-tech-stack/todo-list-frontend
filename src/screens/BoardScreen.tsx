@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { WarningIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Link } from '@chakra-ui/react';
+import { Box, Flex, Heading, Link } from '@chakra-ui/react';
 
 import AddColumn from '../components/AddColumn';
 import ColumnUI from '../components/Column';

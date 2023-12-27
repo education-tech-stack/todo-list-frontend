@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 
 import { Button, Flex, Input } from '@chakra-ui/react';
 
-import Data from '../types';
+import Data, { Task } from '../types';
 import saveBoard from '../utils/saveBoard';
 
-function AddTask(props: {
+function AddTask({
+  columnId,
+  state,
+  setState,
+}: {
   columnId: string;
   state: Data;
   setState: (value: Data) => void;
@@ -13,47 +17,47 @@ function AddTask(props: {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
   const [value, setValue] = useState('');
 
-  function onNewTaskButtonClick() {
+  const onNewTaskButtonClick = () => {
     setShowNewTaskButton(false);
-  }
+  };
 
-  function handleInputChange(event) {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-  }
+  };
 
-  function onNewTaskInputComplete() {
+  const onNewTaskInputComplete = () => {
     setShowNewTaskButton(true);
-    addNewTask(props.columnId, value);
+    addNewTask(columnId, value);
     setValue('');
-  }
+  };
 
-  function addNewTask(columnId, content) {
-    const newTaskId = 'task-' + Math.floor(Math.random() * 100000);
+  function addNewTask(newColumnId: string, content: string) {
+    const newTaskId = `task-${Math.floor(Math.random() * 100000)}`;
 
-    const column = props.state.columns[columnId];
+    const column = state.columns[newColumnId];
     const newTaskIds = Array.from(column.taskIds);
     newTaskIds.push(newTaskId);
 
-    const newTask = {
+    const newTask: Task = {
       id: newTaskId,
-      content: content,
+      content,
     };
 
-    const tempState = {
-      ...props.state,
+    const tempState: Data = {
+      ...state,
       tasks: {
-        ...props.state.tasks,
+        ...state.tasks,
         [newTaskId]: newTask,
       },
       columns: {
-        ...props.state.columns,
-        [columnId]: {
-          ...props.state.columns[columnId],
+        ...state.columns,
+        [newColumnId]: {
+          ...state.columns[newColumnId],
           taskIds: newTaskIds,
         },
       },
     };
-    props.setState(tempState);
+    setState(tempState);
     saveBoard(tempState);
   }
 

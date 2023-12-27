@@ -7,22 +7,14 @@ type Data = {
 export default Data;
 
 export type Task = {
-  id: number;
+  id: string;
   content: string;
-  order: number;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  columnId: number;
 };
 
 export type Column = {
   id: string;
   title: string;
-  order: number;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  userId: number | null;
-  taskIds: number[];
+  taskIds: string[];
 };
 
 export type Authentication = {

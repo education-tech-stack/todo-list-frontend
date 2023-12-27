@@ -34,7 +34,7 @@ function ColumnUI({
       </Flex>
 
       <Droppable droppableId={column.id}>
-        {(droppableProvided, droppableSnapshot) => (
+        {(droppableProvided) => (
           <Flex
             px="1.5rem"
             flex={1}

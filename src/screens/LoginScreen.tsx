@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
+import { Form, useActionData, useNavigation } from 'react-router-dom';
 
 import {
   Box,
@@ -40,7 +39,7 @@ export default function LoginPage() {
               Log in to your account
             </Heading>
             <Text color="fg.muted">
-              Don't have an account? <Link href="/signup">Sign up</Link>
+              Don&apos;t have an account? <Link href="/signup">Sign up</Link>
             </Text>
           </Stack>
         </Stack>

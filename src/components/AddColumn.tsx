@@ -2,46 +2,54 @@ import React, { useState } from 'react';
 
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Input } from '@chakra-ui/react';
+
+import Data, { Column } from '../types';
 import saveBoard from '../utils/saveBoard';
 
-function AddColumn(props) {
+function AddColumn({
+  state,
+  setState,
+}: {
+  state: Data;
+  setState: (value: Data) => void;
+}) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
   const [value, setValue] = useState('');
 
-  function handleInputChange(event) {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-  }
+  };
 
-  function onNewColumnButtonClick() {
+  const onNewColumnButtonClick = () => {
     setShowNewColumnButton(false);
-  }
+  };
 
-  function onNewColumnInputComplete() {
+  const onNewColumnInputComplete = () => {
     setShowNewColumnButton(true);
     addNewColumn(value);
     setValue('');
-  }
+  };
 
-  function addNewColumn(title) {
-    const newColumnOrder = Array.from(props.state.columnOrder);
-    const newColumnId = 'column-' + Math.floor(Math.random() * 100000);
+  function addNewColumn(title: string) {
+    const newColumnOrder = Array.from(state.columnOrder);
+    const newColumnId = `column-${Math.floor(Math.random() * 100000)}`;
     newColumnOrder.push(newColumnId);
 
-    const newColumn = {
+    const newColumn: Column = {
       id: newColumnId,
-      title: title,
+      title,
       taskIds: [],
     };
 
-    const tempState = {
-      ...props.state,
+    const tempState: Data = {
+      ...state,
       columnOrder: newColumnOrder,
       columns: {
-        ...props.state.columns,
+        ...state.columns,
         [newColumnId]: newColumn,
       },
     };
-    props.setState(tempState);
+    setState(tempState);
     saveBoard(tempState);
   }
 

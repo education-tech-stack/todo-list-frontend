@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+
 import { Authentication } from '../types';
 
 export default async function signupAction({ request }: LoaderFunctionArgs) {

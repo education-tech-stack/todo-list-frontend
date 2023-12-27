@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { Button } from '@chakra-ui/react';
+
 export default function Logout() {
   const navigate = useNavigate();
 
@@ -8,5 +10,5 @@ export default function Logout() {
     navigate('/login');
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return <Button onClick={handleLogout}>Logout</Button>;
 }

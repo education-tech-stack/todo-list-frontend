@@ -19,7 +19,7 @@ import saveBoard from '../utils/saveBoard';
 
 export async function boardLoader() {
   try {
-    const data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`, {
+    const data = await axios.post(`${import.meta.env.VITE_SERVER}/todo/board`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },

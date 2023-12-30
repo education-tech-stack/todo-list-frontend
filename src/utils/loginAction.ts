@@ -21,18 +21,10 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    const auth: Authentication = await axios.post(
-      `${import.meta.env.VITE_SERVER}/users/login`,
-      {
-        email,
-        password,
-      }
-    );
-
-    localStorage.setItem(
-      'access_token',
-      JSON.stringify(auth.data.access_token)
-    );
+    await axios.post(`${import.meta.env.VITE_SERVER}/users/login`, {
+      email,
+      password,
+    });
   } catch (error) {
     return {
       error: 'Invalid login attempt',

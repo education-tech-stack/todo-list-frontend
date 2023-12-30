@@ -22,18 +22,11 @@ export default async function signupAction({ request }: LoaderFunctionArgs) {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    const auth: Authentication = await axios.post(
-      `${import.meta.env.VITE_SERVER}/users/signup`,
-      {
-        userName: username,
-        email,
-        password,
-      }
-    );
-    localStorage.setItem(
-      'access_token',
-      JSON.stringify(auth.data.access_token)
-    );
+    await axios.post(`${import.meta.env.VITE_SERVER}/users/signup`, {
+      userName: username,
+      email,
+      password,
+    });
   } catch (error) {
     const err = error as AxiosError;
     const message = (err.response?.data || {

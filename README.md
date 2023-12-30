@@ -5,8 +5,8 @@
 TaskHub is a robust todo board application designed to streamline task management with a user-friendly interface. Built on a tech stack featuring Node.js, Express, React.js, Sequelize ORM, TypeScript, and PostgreSQL, TaskHub offers a seamless experience for organizing and prioritizing tasks.
 
 ![Screenshot 2023-12-28 001935](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/1b923666-3a96-4349-874a-3b3fbd7a4aef)
-![Screenshot 2023-12-28 004935](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/b15f2c25-9bdb-4ad2-b69a-98edf0ed0e98)
-![Screenshot 2023-12-28 004922](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/9f996a30-f3d3-4fdf-9918-4a5ac5763b64)
+![Screenshot 2023-12-31 013923](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/efbda9d7-3e66-4699-90d8-bcf9418f80ec)
+![Screenshot 2023-12-31 013900](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/7946062b-1bbb-402c-a774-9dfa61c03423)
 
 ## Features 🌟
 
@@ -21,6 +21,12 @@ Easily customize your task board by adding new columns to categorize tasks. This
 
 ### Add Tasks 📝
 TaskHub simplifies task creation with a straightforward interface. Users can swiftly add tasks to their designated columns, minimizing time spent on administrative tasks.
+
+### Edit Tasks ✏️
+Effortlessly update task details with the edit feature. Users can modify task names, descriptions, and other information to keep their tasks accurate and up-to-date.
+
+### Delete Tasks 🗑️
+Remove unnecessary tasks with the delete feature. TaskHub allows users to declutter their board by easily removing tasks that are completed or no longer relevant.
 
 ### Reorder Tasks 🔄
 Effortlessly reorder tasks within columns to prioritize work. TaskHub's intuitive drag-and-drop functionality makes task management a breeze.

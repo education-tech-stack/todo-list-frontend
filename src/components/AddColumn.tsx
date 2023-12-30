@@ -16,6 +16,16 @@ function AddColumn({
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
   const [value, setValue] = useState('');
 
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      event.key === 'Enter' ||
+      event.key === 'Tab' ||
+      event.key === 'Escape'
+    ) {
+      onNewColumnInputComplete();
+    }
+  };
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
@@ -25,6 +35,8 @@ function AddColumn({
   };
 
   const onNewColumnInputComplete = () => {
+    if (!value) return;
+
     setShowNewColumnButton(true);
     addNewColumn(value);
     setValue('');
@@ -69,7 +81,10 @@ function AddColumn({
           type="text"
           value={value}
           onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
           onBlur={onNewColumnInputComplete}
+          autoFocus
+          placeholder="Enter column title..."
         />
       )}
     </div>

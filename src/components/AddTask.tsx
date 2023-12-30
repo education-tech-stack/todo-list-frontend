@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { AddIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 
 import Data, { Task } from '../types';
@@ -21,11 +22,23 @@ function AddTask({
     setShowNewTaskButton(false);
   };
 
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      event.key === 'Enter' ||
+      event.key === 'Tab' ||
+      event.key === 'Escape'
+    ) {
+      onNewTaskInputComplete();
+    }
+  };
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 
   const onNewTaskInputComplete = () => {
+    if (!value) return;
+
     setShowNewTaskButton(true);
     addNewTask(columnId, value);
     setValue('');
@@ -73,7 +86,9 @@ function AddTask({
           outline="2px solid"
           outlineColor={onmouseenter ? 'card-border' : 'transparent'}
         >
-          <Button onClick={onNewTaskButtonClick}>New</Button>
+          <Button onClick={onNewTaskButtonClick} leftIcon={<AddIcon />}>
+            New
+          </Button>
         </Flex>
       ) : (
         <Flex
@@ -86,10 +101,14 @@ function AddTask({
           outlineColor={onmouseenter ? 'card-border' : 'transparent'}
         >
           <Input
+            id="new-task"
             type="text"
             value={value}
             onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
             onBlur={onNewTaskInputComplete}
+            placeholder="Enter task description"
+            autoFocus
           />
         </Flex>
       )}

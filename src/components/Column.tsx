@@ -43,7 +43,14 @@ function ColumnUI({
             {...droppableProvided.droppableProps}
           >
             {tasks.map((task, index) => (
-              <TaskUI task={task} key={task.id} index={index} />
+              <TaskUI
+                task={task}
+                key={task.id}
+                index={index}
+                state={state}
+                setState={setState}
+                columnId={column.id}
+              />
             ))}
             <AddTask columnId={column.id} state={state} setState={setState} />
           </Flex>

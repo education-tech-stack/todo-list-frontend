@@ -1,25 +1,29 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import {
-  Link as ReactRouterLink,
-  redirect,
-  useLoaderData,
-} from 'react-router-dom';
+import { redirect, useLoaderData } from 'react-router-dom';
 
-import { WarningIcon } from '@chakra-ui/icons';
-import { Box, Flex, Heading, Link } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import AddColumn from '../components/AddColumn';
 import ColumnUI from '../components/Column';
-import ThemeToggleButton from '../components/ThemeToggleButton';
+import Navbar from '../components/Navbar';
 import Data from '../types';
 import reorderColumnList from '../utils/reorder';
 import saveBoard from '../utils/saveBoard';
 
 export async function boardLoader() {
   try {
-    const data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`);
+    let data;
+    if (import.meta.env.DEV && import.meta.env.VITE_AUTH_TOKEN) {
+      data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`, {
+        headers: {
+          authorization: import.meta.env.VITE_AUTH_TOKEN,
+        },
+      });
+    } else {
+      data = await axios.get(`${import.meta.env.VITE_SERVER}/todo/board`);
+    }
     return data;
   } catch (error) {
     return redirect('/login');
@@ -114,32 +118,24 @@ function BoardScreen(): JSX.Element {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Flex
-        flexDir="column"
-        bg="main-bg"
-        minH="100vh"
-        w="full"
-        color="white-text"
-        pb="1rem"
-      >
-        <Flex py="4rem" flexDir="row" justify="space-around" align="center">
-          <Heading fontSize="3xl" fontWeight={600}>
-            Task Board
-          </Heading>
-          <Link as={ReactRouterLink} to="/logout">
-            Logout <WarningIcon mx="2px" />
-          </Link>
+    <>
+      <Navbar />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Flex
+          flexDir="column"
+          bg="main-bg"
+          minH="100vh"
+          w="full"
+          color="white-text"
+          p="1rem"
+        >
+          <Flex justify="space-between" px="1rem" w="max">
+            {state.columnOrder.map(renderColumn)}
+            <AddColumn state={state} setState={setState} />
+          </Flex>
         </Flex>
-        <Flex justify="space-between" px="1rem" w="max">
-          {state.columnOrder.map(renderColumn)}
-          <AddColumn state={state} setState={setState} />
-        </Flex>
-      </Flex>
-      <Box>
-        <ThemeToggleButton pos="fixed" top="2" right="2" />
-      </Box>
-    </DragDropContext>
+      </DragDropContext>
+    </>
   );
 }
 

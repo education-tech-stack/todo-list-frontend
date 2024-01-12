@@ -4,25 +4,36 @@ import { Draggable } from 'react-beautiful-dnd';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input, Text, useColorModeValue } from '@chakra-ui/react';
 
-import Data, { Task } from '../types';
+import { useAppDispatch } from '../hooks';
+import { deleteTask, updateTask } from '../store/boardSlice';
+import store from '../store/store';
+import { Task } from '../types';
 import saveBoard from '../utils/saveBoard';
 
 export default function TaskUI({
   task,
   index,
-  state,
-  setState,
   columnId,
 }: {
   task: Task;
   index: number;
-  state: Data;
-  setState: (value: Data) => void;
   columnId: string;
 }) {
   const outlineColor = useColorModeValue('black', 'white');
   const [toEdit, setToEdit] = useState(false);
   const [value, setValue] = useState(task.content);
+  const dispatch = useAppDispatch();
+
+  const onTaskDeleteButtonClick = () => {
+    dispatch(
+      deleteTask({
+        curColumnId: columnId,
+        delIndex: index,
+        taskId: task.id,
+      })
+    );
+    saveBoard(store.getState().board_data[0]);
+  };
 
   const onEditTaskButtonClick = () => {
     setToEdit(true);
@@ -46,47 +57,10 @@ export default function TaskUI({
     if (!value) return;
 
     setToEdit(false);
-    saveTask(task.id, value);
+    dispatch(updateTask({ taskId: task.id, content: value }));
+    saveBoard(store.getState().board_data[0]);
     setValue('');
   };
-
-  function saveTask(taskId: string, content: string) {
-    const newTasks = { ...state.tasks };
-    newTasks[taskId].content = content;
-
-    const tempState: Data = {
-      ...state,
-      tasks: newTasks,
-    };
-    setState(tempState);
-    saveBoard(tempState);
-  }
-
-  function deleteTask(curColumnId: string, delIndex: number, taskId: string) {
-    const column = state.columns[curColumnId];
-    const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.splice(delIndex, 1);
-
-    const { tasks } = state;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [taskId]: oldTask, ...newTasks } = tasks;
-
-    const tempState = {
-      ...state,
-      tasks: {
-        ...newTasks,
-      },
-      columns: {
-        ...state.columns,
-        [curColumnId]: {
-          ...column,
-          taskIds: newTaskIds,
-        },
-      },
-    };
-    setState(tempState);
-    saveBoard(tempState);
-  }
 
   return (
     <Draggable key={task.id} draggableId={`${task.id}`} index={index}>
@@ -145,7 +119,7 @@ export default function TaskUI({
                   _groupHover={{ display: 'block' }}
                   display="none"
                   size="sm"
-                  onClick={() => deleteTask(columnId, index, task.id)}
+                  onClick={onTaskDeleteButtonClick}
                   bgColor="blackAlpha.700"
                 >
                   <DeleteIcon color="red" _dark={{ color: 'red' }} />

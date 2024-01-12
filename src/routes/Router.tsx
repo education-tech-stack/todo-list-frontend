@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import BoardScreen, { boardLoader } from '../screens/BoardScreen';
+import BoardScreen, { BoardLoader } from '../screens/BoardScreen';
 import LoginPage from '../screens/LoginScreen';
 import LogoutScreen from '../screens/LogoutScreen';
 import SignupScreen from '../screens/SignupScreen';
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
   {
     id: 'root',
     path: '/',
-    loader: boardLoader,
+    loader: BoardLoader,
     Component: BoardScreen,
     errorElement: (
       <div>

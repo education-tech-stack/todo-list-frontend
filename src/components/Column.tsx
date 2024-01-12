@@ -11,12 +11,10 @@ function ColumnUI({
   column,
   tasks,
   state,
-  setState,
 }: {
   column: Column;
   tasks: Task[];
   state: Data;
-  setState: (value: Data) => void;
 }) {
   return (
     <Flex rounded="3px" bg="column-bg" w="300px" h="620px" flexDir="column">
@@ -47,12 +45,10 @@ function ColumnUI({
                 task={task}
                 key={task.id}
                 index={index}
-                state={state}
-                setState={setState}
                 columnId={column.id}
               />
             ))}
-            <AddTask columnId={column.id} state={state} setState={setState} />
+            <AddTask columnId={column.id} />
           </Flex>
         )}
       </Droppable>

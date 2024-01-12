@@ -3,20 +3,15 @@ import React, { useState } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 
-import Data, { Task } from '../types';
+import { useAppDispatch } from '../hooks';
+import { addTask } from '../store/boardSlice';
+import store from '../store/store';
 import saveBoard from '../utils/saveBoard';
 
-function AddTask({
-  columnId,
-  state,
-  setState,
-}: {
-  columnId: string;
-  state: Data;
-  setState: (value: Data) => void;
-}) {
+function AddTask({ columnId }: { columnId: string }) {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
   const [value, setValue] = useState('');
+  const dispatch = useAppDispatch();
 
   const onNewTaskButtonClick = () => {
     setShowNewTaskButton(false);
@@ -40,39 +35,10 @@ function AddTask({
     if (!value) return;
 
     setShowNewTaskButton(true);
-    addNewTask(columnId, value);
+    dispatch(addTask({ columnId, content: value }));
+    saveBoard(store.getState().board_data[0]);
     setValue('');
   };
-
-  function addNewTask(newColumnId: string, content: string) {
-    const newTaskId = `task-${Math.floor(Math.random() * 100000)}`;
-
-    const column = state.columns[newColumnId];
-    const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.push(newTaskId);
-
-    const newTask: Task = {
-      id: newTaskId,
-      content,
-    };
-
-    const tempState: Data = {
-      ...state,
-      tasks: {
-        ...state.tasks,
-        [newTaskId]: newTask,
-      },
-      columns: {
-        ...state.columns,
-        [newColumnId]: {
-          ...state.columns[newColumnId],
-          taskIds: newTaskIds,
-        },
-      },
-    };
-    setState(tempState);
-    saveBoard(tempState);
-  }
 
   return (
     <div>

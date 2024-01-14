@@ -18,12 +18,16 @@ import {
   VStack,
 } from '@chakra-ui/react';
 
+import { useAppSelector } from '../hooks';
+import { userSelector } from '../store/boardSlice';
+
 import ThemeToggleButton from './ThemeToggleButton';
 
 export default function Navbar() {
   const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
   const navigate = useNavigate();
+  const user = useAppSelector(userSelector);
 
   return (
     <chakra.header bg={bg} w="full" px={{ base: 2, sm: 4 }} py={4} shadow="md">
@@ -45,7 +49,7 @@ export default function Navbar() {
           </chakra.a>
         </Flex>
         <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-          Task Board
+          {user} Board
         </chakra.h1>
         <HStack display="flex" alignItems="center" spacing={1}>
           <HStack

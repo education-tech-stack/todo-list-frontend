@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, Input } from '@chakra-ui/react';
 
-import Data, { Column } from '../types';
+import { useAppDispatch } from '../hooks';
+import { addColumn } from '../store/boardSlice';
+import store from '../store/store';
 import saveBoard from '../utils/saveBoard';
 
-function AddColumn({
-  state,
-  setState,
-}: {
-  state: Data;
-  setState: (value: Data) => void;
-}) {
+function AddColumn() {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
   const [value, setValue] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (
@@ -38,32 +35,10 @@ function AddColumn({
     if (!value) return;
 
     setShowNewColumnButton(true);
-    addNewColumn(value);
+    dispatch(addColumn(value));
+    saveBoard(store.getState().board_data[0]);
     setValue('');
   };
-
-  function addNewColumn(title: string) {
-    const newColumnOrder = Array.from(state.columnOrder);
-    const newColumnId = `column-${Math.floor(Math.random() * 100000)}`;
-    newColumnOrder.push(newColumnId);
-
-    const newColumn: Column = {
-      id: newColumnId,
-      title,
-      taskIds: [],
-    };
-
-    const tempState: Data = {
-      ...state,
-      columnOrder: newColumnOrder,
-      columns: {
-        ...state.columns,
-        [newColumnId]: newColumn,
-      },
-    };
-    setState(tempState);
-    saveBoard(tempState);
-  }
 
   return (
     <div>

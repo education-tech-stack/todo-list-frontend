@@ -16,10 +16,6 @@ import Logo from '../components/Logo';
 import ThemeToggleButton from '../components/ThemeToggleButton';
 
 export default function LoginPage() {
-  // const location = useLocation();
-  // const params = new URLSearchParams(location.search);
-  // const from = params.get('from') || '/';
-
   const navigation = useNavigation();
   const isLoggingIn = navigation.formData?.get('username') != null;
 

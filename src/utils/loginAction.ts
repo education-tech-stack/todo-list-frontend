@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 
-import { Authentication } from '../types';
+import { login } from '../store/boardSlice';
+import store from '../store/store';
 
 export default async function loginAction({ request }: LoaderFunctionArgs) {
   const formData = await request.formData();
@@ -18,13 +18,7 @@ export default async function loginAction({ request }: LoaderFunctionArgs) {
 
   // Sign in and redirect to the proper destination if successful.
   try {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    await axios.post(`${import.meta.env.VITE_SERVER}/users/login`, {
-      email,
-      password,
-    });
+    await store.dispatch(login({ email, password })).unwrap();
   } catch (error) {
     return {
       error: 'Invalid login attempt',

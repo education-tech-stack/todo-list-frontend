@@ -127,10 +127,11 @@ export const boardSlice = createSlice({
         state,
         action: PayloadAction<{ title: string; id: string; taskIds: string[] }>
       ) {
-        console.log('payload', action.payload);
-
         // eslint-disable-next-line no-param-reassign
-        state.board_data[0].columns[action.payload.id] = action.payload;
+        state.board_data[0].columns = {
+          ...state.board_data[0].columns,
+          [action.payload.id]: action.payload,
+        };
         state.board_data[0].columnOrder.push(action.payload.id);
       },
       prepare(title: string) {
@@ -151,7 +152,10 @@ export const boardSlice = createSlice({
         content,
       };
       // eslint-disable-next-line no-param-reassign
-      state.board_data[0].tasks[newTask.id] = newTask;
+      state.board_data[0].tasks = {
+        ...state.board_data[0].tasks,
+        [newTask.id]: newTask,
+      };
       state.board_data[0].columns[columnId].taskIds.push(newTask.id);
     },
   },

@@ -2,7 +2,7 @@
 
 > Backend: [todo-app-backend](https://github.com/education-tech-stack/todo-list-backend)
 
-TaskHub is a robust todo board application designed to streamline task management with a user-friendly interface. Built on a tech stack featuring Node.js, Express, React.js, Sequelize ORM, TypeScript, and PostgreSQL, TaskHub offers a seamless experience for organizing and prioritizing tasks.
+TaskHub is a robust todo board application designed to streamline task management with a user-friendly interface. Built on a tech stack featuring Node.js, Express, Redux, React.js, Sequelize ORM, TypeScript, and PostgreSQL, TaskHub offers a seamless experience for organizing and prioritizing tasks.
 
 ![Screenshot 2023-12-28 001935](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/1b923666-3a96-4349-874a-3b3fbd7a4aef)
 ![Screenshot 2023-12-31 013923](https://github.com/education-tech-stack/todo-list-backend/assets/48860013/efbda9d7-3e66-4699-90d8-bcf9418f80ec)
@@ -44,6 +44,7 @@ Adapt to evolving priorities by moving tasks between columns. This flexibility e
 - [ESLint](https://eslint.org/)
 - [Chakra UI](https://chakra-ui.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 
 ### Backend
 - [Node.js](https://nodejs.org/)
